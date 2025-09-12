@@ -39,6 +39,7 @@ export const generalSettingsTemplate: GeneralForm = {
   useOrdering: 'createdAt',
   appsSameTab: false,
   bookmarksSameTab: false,
+  bookmarksDynamicLayout: false,
 };
 
 export const dockerSettingsTemplate: DockerSettingsForm = {

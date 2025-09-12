@@ -6,6 +6,8 @@ import { Category } from '../../../interfaces';
 
 import { BookmarkCard } from '../BookmarkCard/BookmarkCard';
 import { Message } from '../../UI';
+import { useSelector } from 'react-redux';
+import { State } from '../../../store/reducers';
 
 interface Props {
   categories: Category[];
@@ -22,14 +24,20 @@ export const BookmarkGrid = (props: Props): JSX.Element => {
     fromHomepage = false,
   } = props;
 
+  const { config } = useSelector((state: State) => state.config);
+
   let bookmarks: JSX.Element;
 
   if (categories.length) {
     if (searching && !categories[0].bookmarks.length) {
       bookmarks = <Message>No bookmarks match your search criteria</Message>;
     } else {
+      const gridClass = config.bookmarksDynamicLayout
+        ? classes.BookmarkGridDynamic
+        : classes.BookmarkGridFixed;
+
       bookmarks = (
-        <div className={classes.BookmarkGrid}>
+        <div className={gridClass}>
           {categories.map(
             (category: Category): JSX.Element => (
               <BookmarkCard

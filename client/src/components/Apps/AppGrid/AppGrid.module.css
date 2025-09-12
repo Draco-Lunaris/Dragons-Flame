@@ -1,22 +1,28 @@
-.AppGrid {
+.AppGridFixed {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
 }
 
 @media (min-width: 430px) {
-  .AppGrid {
+  .AppGridFixed {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 670px) {
-  .AppGrid {
+  .AppGridFixed {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 900px) {
-  .AppGrid {
+  .AppGridFixed {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.AppGridDynamic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--app-card-min, 260px), 1fr));
+  gap: var(--app-grid-gap, 16px);
 }

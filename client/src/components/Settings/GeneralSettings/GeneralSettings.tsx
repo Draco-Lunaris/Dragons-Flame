@@ -166,6 +166,20 @@ export const GeneralSettings = (): JSX.Element => {
           </select>
         </InputGroup>
 
+        {/* GRID LAYOUT MODE FOR BOOKMARKS & APPS */}
+        <InputGroup>
+          <label htmlFor="bookmarksDynamicLayout">Grid layout (bookmarks & apps)</label>
+          <select
+            id="bookmarksDynamicLayout"
+            name="bookmarksDynamicLayout"
+            value={formData.bookmarksDynamicLayout ? 1 : 0}
+            onChange={(e) => inputChangeHandler(e, { isBool: true })}
+          >
+            <option value={0}>Fixed grid (current)</option>
+            <option value={1}>Dynamic grid (auto-fit)</option>
+          </select>
+        </InputGroup>
+
         {/* === SEARCH OPTIONS === */}
         <SettingsHeadline text="Search" />
         <InputGroup>

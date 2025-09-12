@@ -4,6 +4,8 @@ import { App } from '../../../interfaces/App';
 
 import { AppCard } from '../AppCard/AppCard';
 import { Message } from '../../UI';
+import { useSelector } from 'react-redux';
+import { State } from '../../../store/reducers';
 
 interface Props {
   apps: App[];
@@ -12,14 +14,19 @@ interface Props {
 }
 
 export const AppGrid = (props: Props): JSX.Element => {
+  const { config } = useSelector((state: State) => state.config);
   let apps: JSX.Element;
 
   if (props.searching || props.apps.length) {
     if (!props.apps.length) {
       apps = <Message>No apps match your search criteria</Message>;
     } else {
+      const gridClass = config.bookmarksDynamicLayout
+        ? classes.AppGridDynamic
+        : classes.AppGridFixed;
+
       apps = (
-        <div className={classes.AppGrid}>
+        <div className={gridClass}>
           {props.apps.map((app: App): JSX.Element => {
             return <AppCard key={app.id} app={app} />;
           })}

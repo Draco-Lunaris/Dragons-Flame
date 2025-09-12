@@ -17,6 +17,7 @@ export interface GeneralForm {
   useOrdering: string;
   appsSameTab: boolean;
   bookmarksSameTab: boolean;
+  bookmarksDynamicLayout: boolean;
 }
 
 export interface UISettingsForm {
