@@ -64,7 +64,7 @@ export const WeatherSettings = (): JSX.Element => {
       .catch((err) => {
         createNotification({
           title: 'Error',
-          message: err.response.data.error,
+          message: (err.response?.data as any)?.error,
         });
       });
   };

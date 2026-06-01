@@ -75,7 +75,7 @@ export const authError =
         type: ActionType.createNotification,
         payload: {
           title: 'Error',
-          message: apiError.response?.data.error,
+          message: (apiError.response?.data as any)?.error,
         },
       });
     }

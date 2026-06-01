@@ -69,7 +69,7 @@ export const addTheme =
         type: ActionType.createNotification,
         payload: {
           title: 'Error',
-          message: error.response?.data.error,
+          message: (error.response?.data as any)?.error,
         },
       });
     }

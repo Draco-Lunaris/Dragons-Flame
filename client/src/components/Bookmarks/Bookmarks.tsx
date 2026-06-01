@@ -29,7 +29,7 @@ import { Form } from './Form/Form';
 import { Table } from './Table/Table';
 
 interface Props {
-  searching: boolean;
+  searching?: boolean;
 }
 
 export enum ContentType {
@@ -37,7 +37,7 @@ export enum ContentType {
   bookmark,
 }
 
-export const Bookmarks = (props: Props): JSX.Element => {
+export const Bookmarks = ({ searching = false }: Props): JSX.Element => {
   // Get Redux state
   const {
     bookmarks: { loading, categories, categoryInEdit },
@@ -183,7 +183,7 @@ export const Bookmarks = (props: Props): JSX.Element => {
       {loading ? (
         <Spinner />
       ) : !showTable ? (
-        <BookmarkGrid categories={categories} searching={props.searching} />
+        <BookmarkGrid categories={categories} searching={searching} />
       ) : (
         <Table
           contentType={tableContentType}

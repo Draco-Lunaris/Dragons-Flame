@@ -24,10 +24,10 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../store';
 
 interface Props {
-  searching: boolean;
+  searching?: boolean;
 }
 
-export const Apps = (props: Props): JSX.Element => {
+export const Apps = ({ searching = false }: Props): JSX.Element => {
   // Get Redux state
   const {
     apps: { apps, loading },
@@ -100,7 +100,7 @@ export const Apps = (props: Props): JSX.Element => {
         {loading ? (
           <Spinner />
         ) : !showTable ? (
-          <AppGrid apps={apps} searching={props.searching} />
+          <AppGrid apps={apps} searching={searching} />
         ) : (
           <AppTable openFormForUpdating={openFormForUpdating} />
         )}
