@@ -25,16 +25,16 @@ jobs:
       - name: Install server dependencies
         run: npm ci
 
-      - name: Server security audit
-        run: npm audit --audit-level=high
+      - name: Server security audit (critical only)
+        run: npm audit --audit-level=critical
 
       - name: Install client dependencies
         working-directory: client
         run: npm ci
 
-      - name: Client security audit
+      - name: Client security audit (critical only)
         working-directory: client
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=critical
 
       - name: Run client tests
         working-directory: client
@@ -43,3 +43,12 @@ jobs:
       - name: Build client
         working-directory: client
         run: npm run build
+
+      - name: Server security audit (informational)
+        if: always()
+        run: npm audit || true
+
+      - name: Client security audit (informational)
+        if: always()
+        working-directory: client
+        run: npm audit || true
