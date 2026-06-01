@@ -62,7 +62,7 @@ const categories: Category[] = [
     name: 'Category',
     isPinned: true,
     orderId: 0,
-    isPublic: 1,
+    isPublic: true,
     bookmarks: [],
     createdAt: new Date(),
     updatedAt: new Date(),
