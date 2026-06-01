@@ -110,7 +110,7 @@ volumes:
 ### Build Scripts
 
 - `build-docker.sh`: Builds for current architecture, optional registry push
-- `build-multiarch.sh`: Builds for AMD64, ARM64, and ARMv7, pushes to registry
+- `build-multiarch.sh`: Builds for AMD64 and ARM64, pushes to registry
 - `docker-compose.yml`: Local development and deployment
 
 ## 📊 Import/Export Features

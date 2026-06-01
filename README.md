@@ -46,10 +46,10 @@ docker run -p 5005:5005 -v /path/to/data:/app/data -e PASSWORD=dragons_flame_pas
 # build image for amd64 only
 docker build -t dragons-flame -f .docker/Dockerfile .
 
-# build multiarch image for amd64, armv7 and arm64
+# build multiarch image for amd64 and arm64
 # building failed multiple times with 2GB memory usage limit so you might want to increase it
 docker buildx build \
-  --platform linux/arm/v7,linux/arm64,linux/amd64 \
+  --platform linux/amd64,linux/arm64 \
   -f .docker/Dockerfile.multiarch \
   -t dragons-flame:multiarch .
 ```
@@ -104,7 +104,35 @@ skaffold dev
 
 ### Without Docker
 
-Follow instructions from the original Flame wiki: [Installation without Docker](https://github.com/pawelmalak/flame/wiki/Installation-without-docker)
+Requires Node.js 24+ and npm 11+.
+
+```bash
+# Clone the repository
+git clone https://github.com/Draco-Lunaris/Dragons-Flame
+cd Dragons-Flame
+
+# Install server dependencies
+npm install --legacy-peer-deps
+
+# Install client dependencies
+cd client
+npm install --legacy-peer-deps
+cd ..
+
+# Build the client
+cd client
+npm run build
+cd ..
+
+# Start the server
+npm start
+```
+
+The server will be available at http://localhost:5005.
+
+For development with hot reload, run in two terminals:
+- Terminal 1: `npm run dev-server` (server on :5005)
+- Terminal 2: `cd client && npm start` (Vite dev server on :3000)
 
 ## Development
 
