@@ -63,7 +63,7 @@ const apps: App[] = [
     url: 'http://example.com',
     icon: 'mdiHome',
     isPinned: true,
-    isPublic: 1,
+    isPublic: true,
     orderId: 0,
     description: '',
     createdAt: new Date(),
