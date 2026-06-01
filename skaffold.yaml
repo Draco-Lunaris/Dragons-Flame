@@ -4,7 +4,7 @@ metadata:
   name: dragons-flame
 build:
   artifacts:
-  - image: kwslavens74/dragons-flame
+  - image: ghcr.io/draco-lunaris/dragons-flame
     context: .
     sync:
       manual:
@@ -22,7 +22,7 @@ profiles:
   - command: dev
   build:
     artifacts:
-    - image: kwslavens74/dragons-flame
+    - image: ghcr.io/draco-lunaris/dragons-flame
       sync:
         manual:
         - src: controllers/*.js
@@ -32,7 +32,7 @@ profiles:
 - name: shokohsc
   build:
     artifacts:
-    - image: kwslavens74/dragons-flame
+    - image: ghcr.io/draco-lunaris/dragons-flame
       sync:
         manual:
         - src: controllers/*.js
@@ -40,7 +40,7 @@ profiles:
       kaniko:
         dockerfile: Dockerfile.dev
         cache:
-          repo: kwslavens74/dragons-flame
+          repo: ghcr.io/draco-lunaris/dragons-flame
     cluster:
       dockerConfig:
         secretName: kaniko-secret
@@ -53,11 +53,11 @@ profiles:
 - name: prod
   build:
     artifacts:
-    - image: kwslavens74/dragons-flame
+    - image: ghcr.io/draco-lunaris/dragons-flame
       kaniko:
         dockerfile: Dockerfile
         cache:
-          repo: kwslavens74/dragons-flame
+          repo: ghcr.io/draco-lunaris/dragons-flame
     cluster:
       dockerConfig:
         secretName: kaniko-secret

@@ -7,7 +7,7 @@ set -e
 
 # Configuration
 IMAGE_NAME="dragons-flame"
-REGISTRY_NAME="kwslavens74"  # Change this to your Docker Hub username
+REGISTRY_NAME="ghcr.io/draco-lunaris"  # Change this to your GHCR org/owner (run `docker login ghcr.io` before push)
 VERSION=$(node -p "require('./package.json').version")
 TAG=${1:-$VERSION}
 

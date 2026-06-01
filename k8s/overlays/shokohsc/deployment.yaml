@@ -17,7 +17,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: dragons-flame
-          image: kwslavens74/dragons-flame
+          image: ghcr.io/draco-lunaris/dragons-flame
           command:
             - npm
           args:

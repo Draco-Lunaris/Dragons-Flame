@@ -1,2 +1,2 @@
-docker build -t kwslavens74/dragons-flame -t "kwslavens74/dragons-flame:$1" -f .docker/Dockerfile . \
-  && docker push kwslavens74/dragons-flame && docker push "kwslavens74/dragons-flame:$1"
+docker build -t ghcr.io/draco-lunaris/dragons-flame -t "ghcr.io/draco-lunaris/dragons-flame:$1" -f .docker/Dockerfile . \
+  && docker push ghcr.io/draco-lunaris/dragons-flame && docker push "ghcr.io/draco-lunaris/dragons-flame:$1"
