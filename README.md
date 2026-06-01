@@ -22,23 +22,22 @@ Dragons Flame is a self-hosted startpage for your server, forked from the origin
 
 ### With Docker (recommended)
 
-[Docker Hub link](https://hub.docker.com/r/kwslavens74/dragons-flame)
+> **Note**: As of v2.4.0, the official image is published to **GitHub Container Registry (GHCR)** — Docker Hub is no longer used. Images are built for **linux/amd64** and **linux/arm64** on every `v*` tag, so a single tag works on x86_64 servers and Raspberry Pi / Apple Silicon alike. No authentication is required to pull public images.
+
+[GitHub Container Registry link](https://github.com/Draco-Lunaris/Dragons-Flame/pkgs/container/dragons-flame)
 
 ```sh
-docker pull kwslavens74/dragons-flame
-
-# for ARM architecture (e.g. RaspberryPi)
-docker pull kwslavens74/dragons-flame:multiarch
+docker pull ghcr.io/draco-lunaris/dragons-flame:latest
 
 # installing specific version
-docker pull kwslavens74/dragons-flame:2.4.0
+docker pull ghcr.io/draco-lunaris/dragons-flame:2.4.0
 ```
 
 #### Deployment
 
 ```sh
 # run container
-docker run -p 5005:5005 -v /path/to/data:/app/data -e PASSWORD=dragons_flame_password kwslavens74/dragons-flame
+docker run -p 5005:5005 -v /path/to/data:/app/data -e PASSWORD=dragons_flame_password ghcr.io/draco-lunaris/dragons-flame:latest
 ```
 
 #### Building images
@@ -62,7 +61,7 @@ version: '3.6'
 
 services:
   dragons-flame:
-    image: kwslavens74/dragons-flame
+    image: ghcr.io/draco-lunaris/dragons-flame:latest
     container_name: dragons-flame
     volumes:
       - /path/to/host/data:/app/data
@@ -126,7 +125,7 @@ Follow instructions from the original Flame wiki: [Installation without Docker](
 
 ```sh
 # clone repository
-git clone https://github.com/kwslavens74/dragons-flame
+git clone https://github.com/Draco-Lunaris/Dragons-Flame
 cd dragons-flame
 
 # run only once

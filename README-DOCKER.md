@@ -2,6 +2,8 @@
 
 This is a fork of [Flame](https://github.com/pawelmalak/flame) with added import/export functionality for backup and migration purposes.
 
+> **Note**: As of v2.4.0, the official image is published to **GitHub Container Registry (GHCR)** — Docker Hub is no longer used. Images are built for **linux/amd64** and **linux/arm64** on every `v*` tag, so a single tag works on x86_64 servers and Raspberry Pi / Apple Silicon alike. No authentication is required to pull public images.
+
 ## ✨ New Features
 
 - **📤 Export Data**: Complete JSON backup or browser-compatible HTML bookmarks
@@ -15,8 +17,8 @@ This is a fork of [Flame](https://github.com/pawelmalak/flame) with added import
 
 ```bash
 # Clone this repository
-git clone https://github.com/your-username/flame
-cd flame
+git clone https://github.com/Draco-Lunaris/Dragons-Flame
+cd dragons-flame
 
 # Start with Docker Compose
 docker-compose up -d
@@ -34,7 +36,7 @@ docker run -d \
   -p 5005:5005 \
   -v flame_data:/app/data \
   -e PASSWORD=your_password \
-  your-username/flame-import-export:latest
+  ghcr.io/draco-lunaris/dragons-flame:latest
 ```
 
 ### Building Your Own Image
@@ -62,7 +64,7 @@ docker run -d \
 version: '3.6'
 services:
   flame:
-    image: your-username/flame-import-export:latest
+    image: ghcr.io/draco-lunaris/dragons-flame:latest
     container_name: flame
     volumes:
       - flame_data:/app/data
@@ -89,8 +91,8 @@ volumes:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/flame
-   cd flame
+   git clone https://github.com/Draco-Lunaris/Dragons-Flame
+   cd dragons-flame
    ```
 
 2. **Build single architecture**:
@@ -162,7 +164,7 @@ Navigate to **Settings → Data** in your Flame interface to access:
 1. **Build fails on ARM devices**:
    ```bash
    # Use the multiarch image instead
-   docker pull your-username/flame-import-export:multiarch-latest
+   docker pull ghcr.io/draco-lunaris/dragons-flame:2.4.0
    ```
 
 2. **Import fails with large files**:
@@ -196,5 +198,5 @@ This is a personal fork. For the original project, visit [pawelmalak/flame](http
 ## 🔗 Links
 
 - **Original Flame**: https://github.com/pawelmalak/flame
-- **Docker Hub**: https://hub.docker.com/r/your-username/flame-import-export
+- **GitHub Container Registry**: https://github.com/Draco-Lunaris/Dragons-Flame/pkgs/container/dragons-flame
 - **Demo**: http://localhost:5005 (after deployment)

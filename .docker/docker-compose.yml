@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   dragons-flame:
-    image: kwslavens74/dragons-flame
+    image: ghcr.io/draco-lunaris/dragons-flame:latest
     container_name: dragons-flame
     volumes:
       - /path/to/host/data:/app/data
