@@ -21,9 +21,10 @@ export const WeatherWidget = (): JSX.Element => {
   );
 
   const [weather, setWeather] = useState<Weather>(weatherTemplate);
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
 
-  // Initial request to get data
+  // Mount-only: initial weather fetch.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     axios
       .get<ApiResponse<Weather[]>>('/api/weather')
@@ -36,8 +37,13 @@ export const WeatherWidget = (): JSX.Element => {
       })
       .catch((err) => console.log(err));
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Open socket for data updates
+  // Mount-only: WebSocket opened once on mount. The `weather` reference
+  // inside onmessage is intentionally captured; using a functional setState
+  // would close over stale state across rapid updates.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const socketProtocol =
       document.location.protocol === 'http:' ? 'ws:' : 'wss:';
@@ -46,14 +52,15 @@ export const WeatherWidget = (): JSX.Element => {
 
     webSocketClient.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      setWeather({
-        ...weather,
+      setWeather((w) => ({
+        ...w,
         ...data,
-      });
+      }));
     };
 
     return () => webSocketClient.close();
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <div className={classes.WeatherWidget}>

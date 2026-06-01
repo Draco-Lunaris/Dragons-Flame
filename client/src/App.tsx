@@ -34,6 +34,10 @@ export const App = (): JSX.Element => {
   const { fetchQueries, setTheme, logout, createNotification, fetchThemes } =
     bindActionCreators(actionCreators, dispath);
 
+  // Intentionally empty deps: mount-only effect. Action creators from
+  // bindActionCreators are stable refs; including them would cause re-runs
+  // that reset the token-check interval.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     // check if token is valid
     const tokenIsValid = setInterval(() => {
@@ -66,21 +70,19 @@ export const App = (): JSX.Element => {
     fetchQueries();
 
     return () => window.clearInterval(tokenIsValid);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // Intentionally empty: this is a mount-only effect (set up interval, fetch initial data).
-    // The action creators are stable references from bindActionCreators;
-    // including them would cause re-runs that reset the token-check interval.
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // If there is no user theme, set the default one
+  // Only depends on `loading`: set default theme once config has finished
+  // loading, not on every config change.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!loading && !localStorage.theme) {
       setTheme(parsePABToTheme(config.defaultTheme), false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // Intentionally only depends on `loading`: we only want to set the default
-    // theme once config has finished loading, not every time config changes.
   }, [loading]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <>

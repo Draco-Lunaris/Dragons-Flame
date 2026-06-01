@@ -31,11 +31,15 @@ export const WeatherSettings = (): JSX.Element => {
   );
 
   // Get config
+  // Only depends on `loading`: populate form once when config finishes
+  // loading, not on every config change.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setFormData({
       ...config,
     });
   }, [loading]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Form handler
   const formSubmitHandler = async (e: FormEvent) => {
@@ -133,9 +137,9 @@ export const WeatherSettings = (): JSX.Element => {
           step="any"
           lang="en-150"
         />
-        <span onClick={getLocation}>
-          <a href="#">Click to get current location</a>
-        </span>
+        <button type="button" onClick={getLocation}>
+          Click to get current location
+        </button>
       </InputGroup>
 
       {/* LONG */}

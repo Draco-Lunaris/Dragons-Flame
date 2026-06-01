@@ -49,12 +49,15 @@ export const Bookmarks = ({ searching = false }: Props): JSX.Element => {
   const { getCategories, setEditCategory, setEditBookmark } =
     bindActionCreators(actionCreators, dispatch);
 
-  // Load categories if array is empty
+  // Intentionally empty deps: load-once on mount. Redux state and action
+  // creators are stable.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!categories.length) {
       getCategories();
     }
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Form
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -75,17 +78,23 @@ export const Bookmarks = ({ searching = false }: Props): JSX.Element => {
     }
   }, [isAuthenticated]);
 
+  // Only re-run when categoryInEdit changes; modalIsOpen is a read-only guard.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (categoryInEdit && !modalIsOpen) {
       setTableContentType(ContentType.bookmark);
       setShowTable(true);
     }
   }, [categoryInEdit]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
+  // Mount-only: reset to default view on initial render.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setShowTable(false);
     setEditCategory(null);
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Form actions
   const toggleModal = (): void => {

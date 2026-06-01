@@ -38,12 +38,15 @@ export const ThemeBuilder = ({ themes }: Props): JSX.Element => {
     }
   }, [themeInEdit]);
 
+  // Only re-run when userThemes changes; isInEdit is a read-only guard.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (isInEdit && !userThemes.length) {
       toggleIsInEdit(false);
       toggleShowModal(false);
     }
   }, [userThemes]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <div className={classes.ThemeBuilder}>

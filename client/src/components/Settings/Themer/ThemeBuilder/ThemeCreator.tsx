@@ -37,9 +37,13 @@ export const ThemeCreator = ({ modalHandler }: Props): JSX.Element => {
     },
   });
 
+  // Only re-run when activeTheme changes; formData is set via spread
+  // (intentionally capturing current state to merge with active colors).
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setFormData({ ...formData, colors: activeTheme.colors });
   }, [activeTheme]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (themeInEdit) {

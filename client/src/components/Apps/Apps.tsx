@@ -38,15 +38,15 @@ export const Apps = ({ searching = false }: Props): JSX.Element => {
   const dispatch = useDispatch();
   const { getApps, setEditApp } = bindActionCreators(actionCreators, dispatch);
 
-  // Load apps if array is empty
+  // Intentionally empty deps: load-once on mount. Redux state and action
+  // creators are stable.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!apps.length) {
       getApps();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // Intentionally empty: load-once on mount. The Redux store state and
-    // action creators are stable; we don't want to re-fetch on every render.
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Form
   const [modalIsOpen, setModalIsOpen] = useState(false);
