@@ -1,4 +1,4 @@
-FROM node:20 as builder
+FROM node:24 as builder
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY . .
 RUN mkdir -p ./public ./data     && cd ./client     && npm ci     && npm run build     && cd ..     && mv ./client/build/* ./public     && rm -rf ./client
 
 # Production stage
-FROM node:20-alpine
+FROM node:24-alpine
 
 # Copy built application
 COPY --from=builder /app /app
