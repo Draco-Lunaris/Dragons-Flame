@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'external-svg-loader';
 
 // Redux
@@ -34,6 +34,10 @@ export const App = (): JSX.Element => {
   const { fetchQueries, setTheme, logout, createNotification, fetchThemes } =
     bindActionCreators(actionCreators, dispath);
 
+  // Intentionally empty deps: mount-only effect. Action creators from
+  // bindActionCreators are stable refs; including them would cause re-runs
+  // that reset the token-check interval.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     // check if token is valid
     const tokenIsValid = setInterval(() => {
@@ -67,23 +71,28 @@ export const App = (): JSX.Element => {
 
     return () => window.clearInterval(tokenIsValid);
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // If there is no user theme, set the default one
+  // Only depends on `loading`: set default theme once config has finished
+  // loading, not on every config change.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!loading && !localStorage.theme) {
       setTheme(parsePABToTheme(config.defaultTheme), false);
     }
   }, [loading]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <>
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/applications" component={Apps} />
-          <Route path="/bookmarks" component={Bookmarks} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/settings/*" element={<Settings />} />
+          <Route path="/applications/*" element={<Apps />} />
+          <Route path="/bookmarks/*" element={<Bookmarks />} />
+        </Routes>
       </BrowserRouter>
       <NotificationCenter />
     </>

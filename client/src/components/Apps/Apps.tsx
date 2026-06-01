@@ -24,10 +24,10 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../store';
 
 interface Props {
-  searching: boolean;
+  searching?: boolean;
 }
 
-export const Apps = (props: Props): JSX.Element => {
+export const Apps = ({ searching = false }: Props): JSX.Element => {
   // Get Redux state
   const {
     apps: { apps, loading },
@@ -38,12 +38,15 @@ export const Apps = (props: Props): JSX.Element => {
   const dispatch = useDispatch();
   const { getApps, setEditApp } = bindActionCreators(actionCreators, dispatch);
 
-  // Load apps if array is empty
+  // Intentionally empty deps: load-once on mount. Redux state and action
+  // creators are stable.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!apps.length) {
       getApps();
     }
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Form
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -55,6 +58,8 @@ export const Apps = (props: Props): JSX.Element => {
       setShowTable(false);
       setModalIsOpen(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Only re-run when isAuthenticated changes; setters are stable.
   }, [isAuthenticated]);
 
   // Form actions
@@ -100,7 +105,7 @@ export const Apps = (props: Props): JSX.Element => {
         {loading ? (
           <Spinner />
         ) : !showTable ? (
-          <AppGrid apps={apps} searching={props.searching} />
+          <AppGrid apps={apps} searching={searching} />
         ) : (
           <AppTable openFormForUpdating={openFormForUpdating} />
         )}

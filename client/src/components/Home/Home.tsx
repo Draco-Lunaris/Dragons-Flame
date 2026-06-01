@@ -47,19 +47,27 @@ export const Home = (): JSX.Element => {
   >(null);
 
   // Load applications
+  // Mount-only: load apps once on initial render.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!apps.length) {
       getApps();
     }
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Load bookmark categories
+  // Mount-only: load categories once on initial render.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!categories.length) {
       getCategories();
     }
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Re-run when localSearch changes; apps/categories are stable Redux state.
   useEffect(() => {
     if (localSearch) {
       // Search through apps
@@ -87,7 +95,7 @@ export const Home = (): JSX.Element => {
       setAppSearchResult(null);
       setBookmarkSearchResult(null);
     }
-  }, [localSearch]);
+  }, [localSearch, apps, categories]);
 
   return (
     <Container>

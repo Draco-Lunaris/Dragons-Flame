@@ -36,9 +36,12 @@ export const SearchBar = (props: Props): JSX.Element => {
     if (!loading && !config.disableAutofocus) {
       inputRef.current.focus();
     }
-  }, [config]);
+  }, [config, loading]);
 
   // Listen for keyboard events outside of search bar
+  // Mount-only: clearSearch is defined below this effect; re-binding on every
+  // render would cause event listener churn.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const keyOutsideFocus = (e: any) => {
       const { key } = e as KeyboardEvent;
@@ -57,6 +60,7 @@ export const SearchBar = (props: Props): JSX.Element => {
 
     return () => window.removeEventListener('keyup', keyOutsideFocus);
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const clearSearch = () => {
     inputRef.current.value = '';

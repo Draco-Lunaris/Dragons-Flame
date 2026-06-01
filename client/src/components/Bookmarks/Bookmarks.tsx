@@ -29,7 +29,7 @@ import { Form } from './Form/Form';
 import { Table } from './Table/Table';
 
 interface Props {
-  searching: boolean;
+  searching?: boolean;
 }
 
 export enum ContentType {
@@ -37,7 +37,7 @@ export enum ContentType {
   bookmark,
 }
 
-export const Bookmarks = (props: Props): JSX.Element => {
+export const Bookmarks = ({ searching = false }: Props): JSX.Element => {
   // Get Redux state
   const {
     bookmarks: { loading, categories, categoryInEdit },
@@ -49,12 +49,15 @@ export const Bookmarks = (props: Props): JSX.Element => {
   const { getCategories, setEditCategory, setEditBookmark } =
     bindActionCreators(actionCreators, dispatch);
 
-  // Load categories if array is empty
+  // Intentionally empty deps: load-once on mount. Redux state and action
+  // creators are stable.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!categories.length) {
       getCategories();
     }
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Form
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -75,17 +78,23 @@ export const Bookmarks = (props: Props): JSX.Element => {
     }
   }, [isAuthenticated]);
 
+  // Only re-run when categoryInEdit changes; modalIsOpen is a read-only guard.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (categoryInEdit && !modalIsOpen) {
       setTableContentType(ContentType.bookmark);
       setShowTable(true);
     }
   }, [categoryInEdit]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
+  // Mount-only: reset to default view on initial render.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setShowTable(false);
     setEditCategory(null);
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Form actions
   const toggleModal = (): void => {
@@ -183,7 +192,7 @@ export const Bookmarks = (props: Props): JSX.Element => {
       {loading ? (
         <Spinner />
       ) : !showTable ? (
-        <BookmarkGrid categories={categories} searching={props.searching} />
+        <BookmarkGrid categories={categories} searching={searching} />
       ) : (
         <Table
           contentType={tableContentType}

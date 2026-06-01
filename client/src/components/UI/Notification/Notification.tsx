@@ -22,6 +22,8 @@ export const Notification = (props: Props): JSX.Element => {
     isOpen ? classes.NotificationOpen : classes.NotificationClose,
   ].join(' ');
 
+  // Mount-only: runs once per notification to schedule auto-close timer.
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const closeNotification = setTimeout(() => {
       setIsOpen(false);
@@ -36,6 +38,7 @@ export const Notification = (props: Props): JSX.Element => {
       window.clearTimeout(clearNotificationTimeout);
     };
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const clickHandler = () => {
     if (props.url) {
