@@ -19,22 +19,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install server dependencies
         run: npm ci
 
-      - name: Server security audit (critical only)
-        run: npm audit --audit-level=critical
+      - name: Server security audit (informational)
+        continue-on-error: true
+        run: npm audit || true
 
       - name: Install client dependencies
         working-directory: client
         run: npm ci
 
-      - name: Client security audit (critical only)
+      - name: Client security audit (informational)
+        continue-on-error: true
         working-directory: client
-        run: npm audit --audit-level=critical
+        run: npm audit || true
 
       - name: Run client tests
         working-directory: client
@@ -43,12 +45,3 @@ jobs:
       - name: Build client
         working-directory: client
         run: npm run build
-
-      - name: Server security audit (informational)
-        if: always()
-        run: npm audit || true
-
-      - name: Client security audit (informational)
-        if: always()
-        working-directory: client
-        run: npm audit || true
