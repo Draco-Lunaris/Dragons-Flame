@@ -14,7 +14,8 @@ const useKubernetes = async (apps) => {
     kc.loadFromCluster();
     const k8sNetworkingV1Api = kc.makeApiClient(k8s.NetworkingV1Api);
     await k8sNetworkingV1Api.listIngressForAllNamespaces().then((res) => {
-      ingresses = res.body.items;
+      // @kubernetes/client-node v0.18+ removed the .body envelope; data is on the response directly
+      ingresses = res.body ? res.body.items : res.items;
     });
   } catch {
     logger.log("Can't connect to the Kubernetes API", 'ERROR');

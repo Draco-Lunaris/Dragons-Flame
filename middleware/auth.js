@@ -11,7 +11,8 @@ const auth = (req, res, next) => {
 
   if (token) {
     try {
-      jwt.verify(token, process.env.SECRET);
+      // jsonwebtoken v9 requires explicit algorithms option to prevent algorithm confusion attacks
+      jwt.verify(token, process.env.SECRET, { algorithms: ['HS256'] });
       tokenIsValid = true;
     } catch (error) {
       tokenIsValid = false;
