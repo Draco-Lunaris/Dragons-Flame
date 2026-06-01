@@ -66,6 +66,10 @@ export const App = (): JSX.Element => {
     fetchQueries();
 
     return () => window.clearInterval(tokenIsValid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Intentionally empty: this is a mount-only effect (set up interval, fetch initial data).
+    // The action creators are stable references from bindActionCreators;
+    // including them would cause re-runs that reset the token-check interval.
   }, []);
 
   // If there is no user theme, set the default one
@@ -73,6 +77,9 @@ export const App = (): JSX.Element => {
     if (!loading && !localStorage.theme) {
       setTheme(parsePABToTheme(config.defaultTheme), false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Intentionally only depends on `loading`: we only want to set the default
+    // theme once config has finished loading, not every time config changes.
   }, [loading]);
 
   return (

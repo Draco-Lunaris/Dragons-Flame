@@ -43,6 +43,9 @@ export const Apps = ({ searching = false }: Props): JSX.Element => {
     if (!apps.length) {
       getApps();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Intentionally empty: load-once on mount. The Redux store state and
+    // action creators are stable; we don't want to re-fetch on every render.
   }, []);
 
   // Form
@@ -55,6 +58,8 @@ export const Apps = ({ searching = false }: Props): JSX.Element => {
       setShowTable(false);
       setModalIsOpen(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Only re-run when isAuthenticated changes; setters are stable.
   }, [isAuthenticated]);
 
   // Form actions
