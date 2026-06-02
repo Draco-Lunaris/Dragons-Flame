@@ -1,22 +1,22 @@
-FROM node:16 as builder
+FROM node:24-bookworm AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --production
+RUN npm ci --omit=dev
 
 COPY . .
 
 RUN mkdir -p ./public ./data \
     && cd ./client \
-    && npm install --production \
+    && npm ci --legacy-peer-deps \
     && npm run build \
     && cd .. \
     && mv ./client/build/* ./public \
     && rm -rf ./client
 
-FROM node:16-alpine
+FROM node:24-alpine
 
 COPY --from=builder /app /app
 

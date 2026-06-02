@@ -50,7 +50,7 @@ docker build -t dragons-flame -f .docker/Dockerfile .
 # building failed multiple times with 2GB memory usage limit so you might want to increase it
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
-  -f .docker/Dockerfile.multiarch \
+  -f Dockerfile \
   -t dragons-flame:multiarch .
 ```
 
