@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Multi-architecture build script for Dragons Flame with Import/Export functionality
-# Builds for AMD64, ARM64, and ARMv7 (Raspberry Pi compatible)
+# Builds for AMD64 and ARM64
 # Usage: ./build-multiarch.sh [tag]
 
 set -e
@@ -15,7 +15,7 @@ TAG=${1:-$VERSION}
 echo "🔥 Building Multi-Architecture Dragons Flame with Import/Export and Data Management"
 echo "📦 Version: $VERSION"
 echo "🏷️  Tag: $TAG"
-echo "🏗️  Architectures: linux/amd64, linux/arm64, linux/arm/v7"
+echo "🏗️  Architectures: linux/amd64, linux/arm64"
 echo ""
 
 # Setup buildx if not already done
@@ -28,7 +28,7 @@ fi
 # Build multi-architecture image
 echo "🔨 Building multi-architecture Docker image..."
 docker buildx build \
-  --platform linux/amd64,linux/arm64,linux/arm/v7 \
+  --platform linux/amd64,linux/arm64 \
   -t $REGISTRY_NAME/$IMAGE_NAME:$TAG \
   -t $REGISTRY_NAME/$IMAGE_NAME:latest \
   -t $REGISTRY_NAME/$IMAGE_NAME:multiarch-$TAG \
@@ -46,7 +46,6 @@ echo ""
 echo "🏗️  Supported architectures:"
 echo "   - linux/amd64 (Intel/AMD 64-bit)"
 echo "   - linux/arm64 (ARM 64-bit)"
-echo "   - linux/arm/v7 (ARM 32-bit, Raspberry Pi)"
 echo ""
 echo "🚀 Deploy on any architecture using:"
 echo "   docker run -d -p 5005:5005 -v dragons_flame_data:/app/data --name dragons-flame $REGISTRY_NAME/$IMAGE_NAME:$TAG"

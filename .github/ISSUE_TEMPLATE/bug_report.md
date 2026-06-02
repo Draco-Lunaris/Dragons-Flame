@@ -9,7 +9,7 @@ assignees: ''
 
 **Deployment details:**
 - App version [e.g. v1.7.4]: 
-- Platform [e.g. amd64, arm64, arm/v7]: 
+- Platform [e.g. amd64, arm64]: 
 - Docker image tag [e.g. latest, multiarch]: 
 
 ---
