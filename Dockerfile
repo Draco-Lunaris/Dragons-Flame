@@ -26,7 +26,7 @@ WORKDIR /app
 RUN addgroup -g 1001 -S nodejs     && adduser -S flame -u 1001
 
 # Set permissions
-RUN chown -R flame:nodejs /app/data     && chmod -R 755 /app/data
+RUN chown -R flame:nodejs /app/data /app/public     && chmod -R 755 /app/data /app/public
 
 # Expose port
 EXPOSE 5005
