@@ -25,7 +25,9 @@ WORKDIR /app
 # Rebuild native modules (sqlite3) for musl libc (alpine uses musl, not glibc).
 # The builder stage compiles on glibc (bookworm) which produces an incompatible
 # .node binary for the alpine runtime. Rebuilding in-place links against musl.
-RUN apk add --no-cache --virtual .build-deps python3 make g++     && npm rebuild sqlite3 --build-from-source     && apk del .build-deps
+# Use NPM_CONFIG_BUILD_FROM_SOURCE env var instead of --build-from-source CLI flag
+# (npm 11 treats the CLI flag as an unknown config and falls through to prebuild-install).
+RUN apk add --no-cache --virtual .build-deps python3 make g++     && NPM_CONFIG_BUILD_FROM_SOURCE=true npm rebuild sqlite3     && apk del .build-deps
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs     && adduser -S flame -u 1001
