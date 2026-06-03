@@ -316,3 +316,9 @@ To migrate from one Dragons Flame instance to another:
 ### Custom CSS and themes
 
 See the original Flame project wiki for [Custom CSS](https://github.com/pawelmalak/flame/wiki/Custom-CSS) and [Custom theme with CSS](https://github.com/pawelmalak/flame/wiki/Custom-theme-with-CSS).
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE) for all Dragons Flame modifications and new code.
+
+The original [Flame](https://github.com/pawelmalak/flame) project by Paweł Malak is licensed under the MIT License. The original MIT license terms are preserved in the [LICENSE](LICENSE) file.
